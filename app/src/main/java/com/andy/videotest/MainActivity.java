@@ -16,6 +16,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         // Example of a call to a native method
         TextView tv = (TextView) findViewById(R.id.drag);
         tv.setOnClickListener(this);
+        findViewById(R.id.media_record).setOnClickListener(this);
         findViewById(R.id.audio_record).setOnClickListener(this);
     }
 
@@ -25,6 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (id){
             case R.id.drag:
                 startActivity(new Intent(this, SurfaceViewDragActivity.class));
+                break;
+            case R.id.media_record:
+                startActivity(new Intent(this, MediaRecordActivity.class));
                 break;
             case R.id.audio_record:
                 startActivity(new Intent(this, AudioRecordActivity.class));

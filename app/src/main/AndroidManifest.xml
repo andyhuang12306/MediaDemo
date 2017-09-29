@@ -21,6 +21,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".SurfaceViewDragActivity"/>
+        <activity android:name=".MediaRecordActivity"/>
         <activity android:name=".AudioRecordActivity"/>
     </application>
 
