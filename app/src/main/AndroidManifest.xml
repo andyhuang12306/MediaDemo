@@ -23,6 +23,7 @@
         <activity android:name=".SurfaceViewDragActivity"/>
         <activity android:name=".MediaRecordActivity"/>
         <activity android:name=".AudioRecordActivity"/>
+        <activity android:name=".AudioRecordActivity2"/>
     </application>
 
 </manifest>

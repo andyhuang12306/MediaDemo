@@ -31,7 +31,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(this, MediaRecordActivity.class));
                 break;
             case R.id.audio_record:
-                startActivity(new Intent(this, AudioRecordActivity.class));
+//                startActivity(new Intent(this, AudioRecordActivity.class));
+                startActivity(new Intent(this, AudioRecordActivity2.class));
                 break;
         }
     }

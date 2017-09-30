@@ -1,5 +1,6 @@
 package com.andy.videotest.audioplayer;
 
+import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
 import android.util.Log;
@@ -29,14 +30,15 @@ public class AudioPlayer implements Player {
     }
 
     private void init() {
-        int minBufferSize = AudioTrack.getMinBufferSize(AudioRecorder.DEFAULT_SAMPLE_RATE, AudioRecorder.DEFAULT_CHANNEL_CONFIG,
+        int minBufferSize = AudioTrack.getMinBufferSize(AudioRecorder.DEFAULT_SAMPLE_RATE,
+                AudioFormat.CHANNEL_CONFIGURATION_MONO,
                 AudioRecorder.DEFAULT_DATA_FORMAT);
         if(minBufferSize==AudioTrack.ERROR_BAD_VALUE){
             Log.e(TAG, "Error: Bad value!");
             return;
         }
         mAudioTrack = new AudioTrack(DEFAULT_MEDIA_TYPE, AudioRecorder.DEFAULT_SAMPLE_RATE,
-                AudioRecorder.DEFAULT_CHANNEL_CONFIG, AudioRecorder.DEFAULT_DATA_FORMAT,
+                AudioFormat.CHANNEL_CONFIGURATION_MONO, AudioRecorder.DEFAULT_DATA_FORMAT,
                 minBufferSize, DEFAULT_AUDIO_MODE);
     }
 
@@ -53,7 +55,6 @@ public class AudioPlayer implements Player {
         if(null!=mAudioTrack){
             if(mAudioTrack.write(data, offSetSize, size)!=size){
                Log.e(TAG, "Error: Could not write all the samples to the device!");
-                return;
             }
             mAudioTrack.play();
             mIsPlayStarted=true;
@@ -82,10 +83,12 @@ public class AudioPlayer implements Player {
         @Override
         public void run() {
             byte[] buffer=new byte[AudioRecorder.SAMPLES_PER_FRAME*2];
-            while (mIsPlayStarted&&mFileReader.readData(buffer, 0, buffer.length)>0){
+            while (mIsLoopExit&&mFileReader.readData(buffer, 0, buffer.length)>0){
                 playAudio(buffer, 0, buffer.length);
+                Log.d(TAG, "读取数据："+buffer.length);
             }
             AudioPlayer.this.stop();
+            Log.d(TAG, "读取数据结束");
             mIsLoopExit=false;
             try {
                 mFileReader.closeFile();

@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.andy.videotest.audioplayer.AudioPlayer;
 import com.andy.videotest.audiorecord.AudioRecorder;
@@ -61,6 +63,7 @@ public class AudioRecordActivity extends AppCompatActivity implements View.OnCli
             case R.id.start_record:
                 //开始录音
                 mRecorder.startRecord();
+                Toast.makeText(this, "开始录音", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.start_play:
 
@@ -71,6 +74,7 @@ public class AudioRecordActivity extends AppCompatActivity implements View.OnCli
                     e.printStackTrace();
                 }
                 mRecorder.stopRecord();
+                Toast.makeText(this, "停止录音，即将播放录音", Toast.LENGTH_SHORT).show();
                 //播放录音
                 mAudioPlayer.play();
                 break;
@@ -82,5 +86,6 @@ public class AudioRecordActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onAudioCaptured(byte[] data) {
         mWavFileWriter.writeData(data, 0, data.length);
+        Log.d("AudioRecordActivity", "写入数据："+data.length);
     }
 }
